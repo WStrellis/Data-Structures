@@ -1,3 +1,6 @@
+from doubly_linked_list import DoublyLinkedList
+
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -6,8 +9,12 @@ class LRUCache:
     order, as well as a storage dict that provides fast access
     to every node stored in the cache.
     """
+
     def __init__(self, limit=10):
-        pass
+        self.dll = DoublyLinkedList()
+        self.limit = limit  # maximum number of items
+        self.size = 0  # current number of items
+        self.nodes = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -16,8 +23,16 @@ class LRUCache:
     Returns the value associated with the key or None if the
     key-value pair doesn't exist in the cache.
     """
+
     def get(self, key):
-        pass
+        # get item from cache
+        found_item = self.nodes.get(key)
+        if found_item:
+            # update MRU
+            self.dll.move_to_front(found_item)
+            return found_item.value
+        # item does not exist
+        return None
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -29,5 +44,33 @@ class LRUCache:
     want to overwrite the old value associated with the key with
     the newly-specified value.
     """
+
     def set(self, key, value):
-        pass
+        # check if key exists
+        if key in self.nodes:
+            # move to MRU
+            self.dll.move_to_front(self.nodes.get(key))
+            #  update ref key
+            self.nodes[key] = self.dll.head
+            # update value
+            self.dll.head.value = value
+            return
+        # if no check size. If at limit delete LRU.
+        if self.size == self.limit:
+            # remove from dll
+            removed = self.dll.remove_from_tail()
+            # remove from nodes
+            found_key = None
+            for n in self.nodes:
+                if self.nodes[n].value == removed:
+                    found_key = n
+            del self.nodes[found_key]
+
+            # decrement  size
+            self.size -= 1
+        # add item to dll
+        self.dll.add_to_head(value)
+        # add item to nodes
+        self.nodes[key] = self.dll.head
+        # increment size
+        self.size += 1
