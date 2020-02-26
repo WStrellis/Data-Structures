@@ -16,12 +16,6 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        # if no root
-        # if not BinarySearchTree._root:
-        # insert value as root
-        # BinarySearchTree._root = BinarySearchTree(value)
-        # else
-        # compare value to root
         if value >= self.value:
             # if larger and root-right child is null:
             if not self.right:
@@ -66,12 +60,20 @@ class BinarySearchTree:
     # You may use a recursive or iterative approach
 
     def for_each(self, cb):
-        pass
+        # call cb on self
+        cb(self.value)
+        # if self.right call for_each on right
+        if self.right:
+            self.right.for_each(cb)
+        # if self.left call for_each on left
+        if self.left:
+            self.left.for_each(cb)
 
-    # DAY 2 Project -----------------------
+        # DAY 2 Project -----------------------
 
-    # Print all the values in order from low to high
-    # Hint:  Use a recursive, depth first traversal
+        # Print all the values in order from low to high
+        # Hint:  Use a recursive, depth first traversal
+
     def in_order_print(self, node):
         pass
 
