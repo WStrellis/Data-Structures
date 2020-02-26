@@ -30,7 +30,7 @@ class LRUCache:
         if found_item:
             # update MRU
             self.dll.move_to_front(found_item)
-            return found_item.value
+            return found_item.value[1]
         # item does not exist
         return None
 
@@ -53,23 +53,18 @@ class LRUCache:
             #  update ref key
             self.nodes[key] = self.dll.head
             # update value
-            self.dll.head.value = value
+            self.dll.head.value = (key, value)
             return
         # if no check size. If at limit delete LRU.
         if self.size == self.limit:
-            # remove from dll
-            removed = self.dll.remove_from_tail()
             # remove from nodes
-            found_key = None
-            for n in self.nodes:
-                if self.nodes[n].value == removed:
-                    found_key = n
-            del self.nodes[found_key]
-
+            del self.nodes[self.dll.tail.value[0]]
+            # remove from dll
+            self.dll.remove_from_tail()
             # decrement  size
             self.size -= 1
         # add item to dll
-        self.dll.add_to_head(value)
+        self.dll.add_to_head((key, value))
         # add item to nodes
         self.nodes[key] = self.dll.head
         # increment size
