@@ -14,6 +14,16 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
+        # if no root
+        # insert value as root
+        # else
+        # compare value to root
+        # if larger and root-right child is null:
+        # add as right child
+        # else move to right child and repeat
+        # if smaller and root-left child is null:
+        # add as left child
+        # else move to left child and repeat
         pass
 
     # Return True if the tree contains the value
