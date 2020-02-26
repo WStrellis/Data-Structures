@@ -7,6 +7,8 @@ import dll_stack
 
 
 class BinarySearchTree:
+    _root = None
+
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -15,16 +17,27 @@ class BinarySearchTree:
     # Insert the given value into the tree
     def insert(self, value):
         # if no root
-        # insert value as root
+        if not BinarySearchTree._root:
+            # insert value as root
+            BinarySearchTree._root = BinarySearchTree(value)
         # else
         # compare value to root
-        # if larger and root-right child is null:
-        # add as right child
+        if value >= self.value:
+            # if larger and root-right child is null:
+            if not self.right:
+                # add as right child
+                self.right = BinarySearchTree(value)
         # else move to right child and repeat
-        # if smaller and root-left child is null:
-        # add as left child
+            else:
+                self.right.insert(value)
+        if value < self.value:
+            # if smaller and root-left child is null:
+            if not self.left:
+                # add as left child
+                self.left = BinarySearchTree(value)
         # else move to left child and repeat
-        pass
+            else:
+                self.left.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
