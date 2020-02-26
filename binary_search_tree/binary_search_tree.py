@@ -17,9 +17,9 @@ class BinarySearchTree:
     # Insert the given value into the tree
     def insert(self, value):
         # if no root
-        if not BinarySearchTree._root:
-            # insert value as root
-            BinarySearchTree._root = BinarySearchTree(value)
+        # if not BinarySearchTree._root:
+        # insert value as root
+        # BinarySearchTree._root = BinarySearchTree(value)
         # else
         # compare value to root
         if value >= self.value:
@@ -58,10 +58,13 @@ class BinarySearchTree:
     # Return the maximum value found in the tree
 
     def get_max(self):
-        pass
+        if self.right:
+            return self.right.get_max()
+        return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
+
     def for_each(self, cb):
         pass
 
